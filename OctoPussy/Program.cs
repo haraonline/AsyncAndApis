@@ -7,7 +7,7 @@ namespace OctoPussy
     {
         static void Main(string[] args)
         {
-            string userName = "haraonline";
+            string userName = "microsoft/sql-server-samples";
             IReadOnlyList<Repository> repos = ListRepos(userName).GetAwaiter().GetResult();
             Console.WriteLine("Repositories for {0}:", userName);
             Console.WriteLine("---------------------");
