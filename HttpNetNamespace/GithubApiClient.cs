@@ -1,8 +1,10 @@
-﻿namespace HttpNetNamespace
+﻿using Newtonsoft.Json;
+
+namespace HttpNetNamespace
 {
     internal class GithubApiClient
     {
-        public async Task<string> ListRepos(string userName)
+        public static async Task<List<GitHubRepo>> ListRepos(string userName)
         {
             //PREPARE THE REQUEST
             using HttpClient client = new HttpClient();
@@ -17,15 +19,16 @@
 
             //READ THE RESPONSE CONTENT
             if (response.IsSuccessStatusCode)
-            {                
-                string content = await response.Content.ReadAsStringAsync();                
-                return content;
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                List<GitHubRepo> repos = JsonConvert.DeserializeObject<List<GitHubRepo>>(content);
+                return repos;
             }
 
             else
             {
-                return $"Error: Request failed with status code: {response.StatusCode}";
-            }            
+                throw new Exception($"The call failed with status code: {response.StatusCode}");
+            }
         }
     }
 }

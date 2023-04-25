@@ -2,9 +2,15 @@
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            string userName = "haraonline";
+            List<GitHubRepo> repos = await GithubApiClient.ListRepos(userName);
+
+            foreach (GitHubRepo repo in repos)
+            {
+                Console.WriteLine($"{repo.Id}, {repo.Name}, {repo.HtmlUrl}");
+            }
         }
     }
 }
